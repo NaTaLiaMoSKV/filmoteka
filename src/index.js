@@ -1,33 +1,29 @@
-import { fetchMovies } from "./fetchMovies";
-import { LocalStorageEntry } from "./localStorageEntry";
+import { fetchMovies } from "./partials/fetchMovies";
+import { LocalStorageEntry } from "./partials/localStorageEntry";
+
 
 const fetchMoviesApi = new fetchMovies();
 const queue = new LocalStorageEntry('Queue');
 const watched = new LocalStorageEntry('Watched');
+
+const input = document.querySelector('.js-movie-search');
+const searchBtn = document.querySelector('.js-search-btn');
+searchBtn.addEventListener('click', onSearchBtnClick);
+
+// fetchMoviesApi.getTrendingMovies().then(console.log).catch(console.log);
+
+function onSearchBtnClick(e) {
+    e.preventDefault();
+    fetchMoviesApi.searchQuery = input.value;
+    fetchMoviesApi.getMovieByTitle().then(console.log).catch(console.log);
+}
 
 createDataResults();
 
 async function createDataResults() {
     queue.updateLocalStorageEntry();
     watched.updateLocalStorageEntry();
-
-    const dataResults = await fetchMoviesApi.fetchPopularMovies();
-    console.log('\nAdd to queue:')
-    queue.addMovieToLocalStorage(dataResults[0]);
-    console.log(queue.length);
-
-    console.log('\nAdd to watched:')
-    watched.addMovieToLocalStorage(dataResults[1]);
-    console.log(watched.length);
-
-
-    console.log('\nDelete from queue:')
-    queue.deleteMovieFromLocalStorage(dataResults[0]);
-    console.log(queue.length);
-
-    console.log('\nDelete from watched:');
-    watched.deleteMovieFromLocalStorage(dataResults[1]);
-    console.log(watched.length);
 }
+
 
 
