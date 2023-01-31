@@ -1,0 +1,31 @@
+body {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+}
+
+img {
+    padding: 0;
+    margin: 0;
+}
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--white-color);
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
