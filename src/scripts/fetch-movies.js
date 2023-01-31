@@ -16,12 +16,14 @@ export class fetchMovies {
   async getMovieByTitle() {
     const response = await axios.get(`${this.BASE_URL}/search/movie?api_key=${this.API_KEY}&language=en-US&query=${this.searchQuery}&page=${this.page}&include_adult=false`);
     const data = response.data;
+    // this.page += 1;
     return data.results.map(this.trasformMovie);
   }
 
   async getTrendingMovies() {
     const response = await axios.get(`${this.BASE_URL}/trending/movie/week?api_key=${this.API_KEY}&page=${this.page}`);
     const data = response.data;
+    // this.page += 1;
     return data.results.map(this.trasformMovie);
   }
 
