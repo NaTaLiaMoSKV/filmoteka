@@ -8,6 +8,16 @@ export class LocalStorageEntry {
         this.key = key;
     }
 
+    // return movie from localStorage by id
+    getMovieById(movieId) {
+        // console.log(`id: ${movieId}`);
+        for (let i = 0; i < this.list[0].length; i++) {
+            // console.log(this.list[0][i].id);
+            // console.log(movieId);
+            if (this.list[0][i].id == movieId) return this.list[0][i];
+        }
+    }
+
     // add new Movie to localStorage
     addMovieToLocalStorage(movie) {
         this.list.unshift(movie);

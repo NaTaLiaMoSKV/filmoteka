@@ -8,8 +8,8 @@ export class fetchMovies {
     this.totalPages = 0;
     this.BASE_URL = 'https://api.themoviedb.org/3'
     this.API_KEY = '01da1c68b81345f905c14aa4e6274718';
-    this.trasformMovie = ({poster_path, overview, release_date, id, original_title, title, backdrop_path, popularity, vote_count, video, genre_ids}) => {
-      return {title, id, poster_path, overview, release_date, original_title, backdrop_path, popularity, vote_count, video, genres: genre_ids.map(n => genres.find(genre => genre.id === n).name) };
+    this.trasformMovie = ({poster_path, overview, vote_average, release_date, id, original_title, title, backdrop_path, popularity, vote_count, video, genre_ids}) => {
+      return {title, id, poster_path, overview, release_date, original_title, backdrop_path, popularity, vote_average, vote_count, video, genres: genre_ids.map(n => genres.find(genre => genre.id === n).name) };
     }
   }
 
@@ -26,6 +26,7 @@ export class fetchMovies {
     // this.page += 1;
     return data.results.map(this.trasformMovie);
   }
+
 
   resetPage() {
     this.page = 1;

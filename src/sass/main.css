@@ -182,6 +182,7 @@ input.js-movie-search::placeholder {
 
 .value__vote {
   background-color: var(--orange-content-color);
+  color: var(--white-color);
   padding: 1px 9px;
   border-radius: 5px;
 }
@@ -388,6 +389,10 @@ li.card {
 
 .card__add-info {
   color: var(--orange-content-color);
+}
+
+span.value__vote {
+  margin-left: 5px;
 }
 
 @media screen and (min-width: 320px) {

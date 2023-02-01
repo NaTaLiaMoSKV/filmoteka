@@ -17,6 +17,10 @@ li.card {
     color: var(--orange-content-color);
 }
 
+span.value__vote {
+    margin-left: 5px;
+}
+
 @media screen and (min-width: 320px) {
 
     .gallery {
