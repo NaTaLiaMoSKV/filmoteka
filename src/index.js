@@ -1,5 +1,5 @@
-import { fetchMovies } from "./scripts/fetch-movies";
-import { LocalStorageEntry } from "./scripts/local-storage-entry";
+import { fetchMovies } from "./js/fetch-movies";
+import { LocalStorageEntry } from "./js/local-storage-entry";
 
 const fetchMoviesApi = new fetchMovies();
 const queue = new LocalStorageEntry('Queue');
@@ -10,6 +10,8 @@ const input = document.querySelector('.js-movie-search');
 const searchBtn = document.querySelector('.js-search-btn');
 const galleryList = document.querySelector('ul.gallery');
 const modalCard = document.querySelector('.modal-card');
+const infoText = document.querySelector('.info__text')
+
 
 searchBtn.addEventListener('click', onSearchBtnClick);
 
@@ -26,6 +28,62 @@ async function addTrendingCards() {
     addGalleryCardsEventListeners();
     
     
+}
+
+async function onSearchBtnClick(e) {
+    e.preventDefault();
+
+    clearGalleryList();
+    if (input.value === '') {
+        addTrendingCards();
+        return;
+    }
+    fetchMoviesApi.searchQuery = input.value;
+    input.value = '';
+    const moviesByTitle = await fetchMoviesApi.getMovieByTitle();
+    if (moviesByTitle.length === 0) {
+        infoText.classList.remove('is-hidden');
+        setTimeout(() => {
+            infoText.classList.add('is-hidden');
+        }, 2000);
+    }
+    const markup = createGalleryCardsMarkup(moviesByTitle);
+    galleryList.innerHTML = markup;
+    addGalleryCardsEventListeners();
+}
+
+async function createDataResults() {
+    queue.updateLocalStorageEntry();
+    watched.updateLocalStorageEntry();
+    currentPage.updateLocalStorageEntry();
+}
+
+function addGalleryCardsEventListeners() {
+    const modal = document.querySelector('[data-modal]');
+    const modalOpenList = document.querySelectorAll('[data-modal-open]');
+    const modalClose = document.querySelector('[data-modal-close]');
+
+    modalOpenList.forEach(item => {
+        item.addEventListener('click', toggleModal);
+    });
+
+    modalClose.addEventListener('click', toggleModal);
+
+    function toggleModal(e) {
+        if (modal.classList.contains('is-hidden')) {
+            // modal.classList.toggle('is-hidden');
+            renderModalCard(e.target);
+            
+        }
+        modal.classList.toggle('is-hidden');
+    }
+}
+
+function renderModalCard(el) {
+    const movieId = findMovieId(el);
+    
+    const movie = currentPage.getMovieById(movieId);
+    modalCard.innerHTML = createModalCardMarkup(movie);
 }
 
 function createModalCardMarkup(movie) {
@@ -57,64 +115,6 @@ function createModalCardMarkup(movie) {
     `;
 }
 
-
-function addGalleryCardsEventListeners() {
-    const modal = document.querySelector('[data-modal]');
-    const modalOpenList = document.querySelectorAll('[data-modal-open]');
-    const modalClose = document.querySelector('[data-modal-close]');
-
-    modalOpenList.forEach(item => {
-        item.addEventListener('click', toggleModal);
-    });
-
-    modalClose.addEventListener('click', toggleModal);
-
-    function toggleModal(e) {
-        if (modal.classList.contains('is-hidden')) {
-            // modal.classList.toggle('is-hidden');
-            renderModalCard(e.target);
-            
-        }
-        modal.classList.toggle('is-hidden');
-    }
-}
-
-function renderModalCard(el) {
-    const movieId = findMovieId(el);
-    // console.log('MovieId = ' + movieId);
-    
-    const movie = currentPage.getMovieById(movieId);
-    modalCard.innerHTML = createModalCardMarkup(movie);
-    console.log(modalCard);
-}
-
-function findMovieId(el) {
-    for (let i = 0; i < galleryList.children.length; i++) {
-        for (let j = 0; j < galleryList.children[0].childNodes.length; j++) {
-            if (galleryList.children[i].childNodes[j] === el) {
-                return galleryList.children[i].dataset.id;
-            }
-        }
-    }
-}
-
-async function onSearchBtnClick(e) {
-    e.preventDefault();
-
-    clearGalleryList();
-    if (input.value === '') {
-        addTrendingCards();
-        return;
-    }
-    fetchMoviesApi.searchQuery = input.value;
-    input.value = '';
-    const moviesByTitle = await fetchMoviesApi.getMovieByTitle();
-    if (moviesByTitle.length === 0) console.log('No movie with that name');
-    const markup = createGalleryCardsMarkup(moviesByTitle);
-    galleryList.innerHTML = markup;
-    addGalleryCardsEventListeners();
-}
-
 function createGalleryCardsMarkup(movies) {
     
     return movies.map((movie) => {
@@ -135,14 +135,18 @@ function createGalleryCardsMarkup(movies) {
     }).join('');
 }
 
-function clearGalleryList() {
-    galleryList.innerHTML = '';
+function findMovieId(el) {
+    for (let i = 0; i < galleryList.children.length; i++) {
+        for (let j = 0; j < galleryList.children[0].childNodes.length; j++) {
+            if (galleryList.children[i].childNodes[j] === el) {
+                return galleryList.children[i].dataset.id;
+            }
+        }
+    }
 }
 
-async function createDataResults() {
-    queue.updateLocalStorageEntry();
-    watched.updateLocalStorageEntry();
-    currentPage.updateLocalStorageEntry();
+function clearGalleryList() {
+    galleryList.innerHTML = '';
 }
 
 

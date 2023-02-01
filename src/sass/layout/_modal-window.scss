@@ -2,9 +2,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    border: 1px solid var(--black-color);
+    overflow-y: auto;
     transform: translate(-50%, -50%);
-
+    border: 1px solid var(--black-color);
     background-color: var(--white-color);
 }
 .modal-window__button {
@@ -16,9 +16,14 @@
     margin: 0;
     padding: 0;
     text-align: center;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: none;
     background-color: var(--white-color);
+    transform: scale(1);
+    transition: transform 250ms var(--timing-function);
+
+    &:hover {
+        transform: scale(1.25);
+    }
 }
 
 .modal-window__icon {

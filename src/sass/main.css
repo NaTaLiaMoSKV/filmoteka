@@ -5,10 +5,6 @@ header {
   background-size: cover;
 }
 
-header .container {
-  text-align: center;
-}
-
 .nav-menu {
   padding-top: 40px;
   display: flex;
@@ -26,13 +22,12 @@ header .container {
 }
 
 .logo__site-title {
-  margin-left: 12px;
-  font-size: 30px;
-  line-height: 35px;
+  display: none;
 }
 
 .site-pages {
   display: flex;
+  align-items: center;
 }
 
 .site-pages__item {
@@ -50,13 +45,16 @@ header .container {
 }
 
 .search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0;
   margin-top: 40px;
-  padding-bottom: 80px;
 }
 
 input.js-movie-search {
-  width: 395px;
   border: none;
   background-color: transparent;
   color: var(--white-color);
@@ -79,10 +77,10 @@ input.js-movie-search::placeholder {
 }
 
 .js-search-btn {
+  width: 20px;
+  height: 20px;
   border: none;
   background-color: transparent;
-  width: 25px;
-  height: 25px;
   padding: 0;
 }
 
@@ -90,12 +88,92 @@ input.js-movie-search::placeholder {
   width: inherit;
 }
 
+p.info__text {
+  padding-bottom: 44px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--red-content-color);
+  opacity: 1;
+  transition: opacity 250ms var(--timing-function);
+}
+p.info__text.is-hidden {
+  opacity: 0;
+}
+
+.library-buttons {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+
+.library-buttons button {
+  padding: 0;
+  background-color: transparent;
+  border: 1px solid var(--white-color);
+  border-radius: 5px;
+  font-family: "Roboto";
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--white-color);
+  transition: border 250ms var(--timing-function), background-color 250ms var(--timing-function);
+}
+.library-buttons button:hover, .library-buttons button:focus {
+  border: 1px solid var(--orange-content-color);
+  background-color: var(--orange-content-color);
+}
+.library-buttons button:last-child {
+  margin-left: 32px;
+}
+
+@media screen and (min-width: 320px) {
+  .js-movie-search {
+    width: 280px;
+  }
+  p.info__text {
+    margin-top: 15px;
+  }
+  .library-buttons {
+    margin-top: 60px;
+  }
+  .library-buttons button {
+    width: 130px;
+    height: 44px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .logo__site-title {
+    display: block;
+    margin-left: 12px;
+    font-size: 30px;
+    line-height: 35px;
+  }
+  .js-movie-search {
+    width: 336px;
+  }
+  p.info__text {
+    margin-top: 15px;
+  }
+  .library-buttons {
+    margin-top: 40px;
+  }
+  .library-buttons button {
+    width: 152px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .js-movie-search {
+    width: 394px;
+  }
+}
 .modal-window {
   position: absolute;
   top: 50%;
   left: 50%;
-  border: 1px solid var(--black-color);
+  overflow-y: auto;
   transform: translate(-50%, -50%);
+  border: 1px solid var(--black-color);
   background-color: var(--white-color);
 }
 
@@ -108,9 +186,13 @@ input.js-movie-search::placeholder {
   margin: 0;
   padding: 0;
   text-align: center;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: none;
   background-color: var(--white-color);
+  transform: scale(1);
+  transition: transform 250ms var(--timing-function);
+}
+.modal-window__button:hover {
+  transform: scale(1.25);
 }
 
 .modal-window__icon {
@@ -299,6 +381,10 @@ input.js-movie-search::placeholder {
     margin-left: 8px;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Roboto";
   font-style: normal;
@@ -355,7 +441,7 @@ ul {
 }
 @media screen and (min-width: 1200px) {
   .container {
-    width: 1200px;
+    width: 1136px;
   }
 }
 .backdrop {
