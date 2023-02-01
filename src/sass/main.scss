@@ -1,7 +1,11 @@
 @import './layout/header';
+@import './layout/modal-window';
+@import './layout/modal-card';
 
 @import './base/base';
 
 @import './components/container';
+@import './components/backdrop';
+@import './components/gallery-card';
 
 @import './utils/variables';

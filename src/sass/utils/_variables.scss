@@ -1,4 +1,12 @@
 :root {
     --white-color: #fff;
+    --black-color: #000;
+
+    --gray-modal-text-color: #8C8C8C;
+    --light-gray-modal-bg-color: #F7F7F7;
+
+    --orange-content-color: #FF6B01;
     --red-content-color: rgba(255, 0, 27, 1);
+
+    --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
