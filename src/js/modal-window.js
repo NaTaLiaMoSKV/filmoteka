@@ -10,7 +10,7 @@ const modal = document.querySelector('[data-modal]');
 
 const watchedMovies = JSON.parse(localStorage.getItem('Watched'));
 const queueMovies = JSON.parse(localStorage.getItem('Queue'));
-// console.log(watchedMovies);
+console.log(watchedMovies);
 
 function handleGalleryCards(page) {
     
@@ -60,12 +60,9 @@ function renderModalCard(el) {
 function createModalCardMarkup(movie) {
     let watchedBtnText = 'add to watched';
     let queueBtnText = 'add to queue';
-    // if (watchedMovies.length !== 0) {
-        // if(findMovieInList(movie, watchedMovies)) watchedBtnText = 'Remove from watched';
-    // }
     
-    // if (watched.findMovie(movie) || watchedMovies.includes(movie)) watchedBtnText = 'Remove from watched';
-    // if (queue.findMovie(movie) || queuedMovies.includes(movie)) queueBtnText = 'Remove from queue';
+    if(watched.findMovie(movie) || (watchedMovies !== null && findMovieInList(movie, watchedMovies))) watchedBtnText = 'remove from watched';
+    if(queue.findMovie(movie) || (queueMovies !== null && findMovieInList(movie, queueMovies))) queueBtnText = 'remove from queue';
 
     return `
         <img class="modal-card__img" src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="${movie.title}" width="200" height="300">
@@ -93,7 +90,7 @@ function createModalCardMarkup(movie) {
             </div>
         </div>
     `;
-} // +-
+} 
 
 function findMovieInList(movie, list) {
     if(list.find(item => item.id === movie.id) !== undefined) return true;
@@ -110,38 +107,54 @@ function findMovieId(el) {
     }
 } 
 
+// TO DO: Delete from library
 function handleLocalStorageButtons(movie) {
 
     const watchedBtn = document.querySelector('.add-to-watched-btn');
     const queueBtn = document.querySelector('.add-to-queue-btn');
 
     watchedBtn.addEventListener('click', () => {
-        if (!watched.findMovie(movie)) {
-            watched.addMovieToLocalStorage(movie);
-            watchedMovies.list.unshift(movie);
-            watchedBtn.textContent = 'Remove from watched';
-            console.log(watchedMovies);
-           } else {
+        // if (watched.findMovie(movie) || (watchedMovies !== null && findMovieInList(movie, watchedMovies))) {
+        //     watched.deleteMovieFromLocalStorage(movie);
+        //     watchedBtn.textContent = 'Add to watched';
+        //     watchedMovies.splice(watchedMovies.indexOf(movie), 1);
+        //     console.log(watchedMovies);
+            
+        // } else {
+        //     watched.addMovieToLocalStorage(movie);
+        //     watchedBtn.textContent = 'Remove from watched';
+        //     watchedMovies.unshift(movie);
+        //     console.log(watchedMovies);
+        // }
+
+        if (watched.findMovie(movie) || (watchedMovies !== null && findMovieInList(movie, watchedMovies))) {
             watched.deleteMovieFromLocalStorage(movie);
-            watchedMovies.list.splice(watchedMovies.indexOf(movie), 1);
             watchedBtn.textContent = 'Add to watched';
+            watchedMovies.splice(watchedMovies.indexOf(movie), 1);
+            console.log(watchedMovies);
+            
+        } else {
+            watched.addMovieToLocalStorage(movie);
+            watchedBtn.textContent = 'Remove from watched';
+            watchedMovies.unshift(movie);
             console.log(watchedMovies);
         }
+        
     });
 
-    // queueBtn.addEventListener('click', () => {
-    //     if (!queueMovies.includes(movie)) {
-    //         queue.addMovieToLocalStorage(movie);
-    //         queueMovies.unshift(movie);
-    //         // queueBtn.textContent = 'Remove from queue';
-    //         console.log(queueMovies);
-    //     } else {
-    //         queue.deleteMovieFromLocalStorage(movie);
-    //         queueMovies.splice(watchedMovies.indexOf(movie), 1);
-    //         // queueBtn.textContent = 'Add to queue';
-    //         console.log(queueMovies);
-    //     }
-    // });
+    queueBtn.addEventListener('click', () => {
+        if (!queue.findMovie(movie)) {
+            queue.addMovieToLocalStorage(movie);
+            queueMovies.unshift(movie);
+            queueBtn.textContent = 'Remove from watched';
+            console.log(queueMovies);
+        } else {
+            queue.deleteMovieFromLocalStorage(movie);
+            queueMovies.splice(queueMovies.indexOf(movie), 1);
+            queueBtn.textContent = 'Add to watched';
+            console.log(queueMovies);
+        }
+    });
     
 }
 export { watchedMovies, queueMovies };
