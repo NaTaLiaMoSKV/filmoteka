@@ -20,16 +20,24 @@ export class LocalStorageEntry {
         if (!this.list.includes(movie)) {
             this.list.unshift(movie);
             this.updateLocalStorageEntry();
-        } else console.log('already in storage');
+        } else Notiflix.Notify.info('already in storage');
         
+    }
 
+    
+    findMovie(movie) {
+        if (this.list.length > 0) {
+            if (this.list.map(movie => movie.id).includes(movie.id)) return true;
+            else return false;
+        } return false;
     }
 
     // delete the movie from localStorage
     deleteMovieFromLocalStorage(movie) {
-        if(this.list.includes(movie)) {
+        if(this.list.map(movie => movie.id).includes(movie.id)) {
             this.list.splice(this.list.indexOf(movie), 1);
             this.updateLocalStorageEntry();
+            // this.length = this.list.length;
         } else
         Notiflix.Notify.failure('can\'t find the movie to delete');
     }

@@ -116,13 +116,19 @@ p.info__text {
     transition: border 250ms var(--timing-function), background-color 250ms var(--timing-function);
 
     &:hover,
-    &:focus {
+    &:focus,
+    &.on-focus {
         border: 1px solid var(--orange-content-color);
         background-color: var(--orange-content-color);
     }
 
     &:last-child {
         margin-left: 32px;
+    }
+
+    &.on-focus {
+        border: 1px solid var(--orange-content-color);
+        background-color: var(--orange-content-color);
     }
 }
 

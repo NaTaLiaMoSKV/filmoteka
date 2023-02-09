@@ -1,21 +1,22 @@
+// import {watched, queue} from './js/modal-window';
+
+
 import { fetchMovies } from "./js/fetch-movies";
 import { LocalStorageEntry } from "./js/local-storage-entry";
 import * as modalUtils from "./js/modal-window";
 
 const fetchMoviesApi = new fetchMovies();
-const queue = new LocalStorageEntry('Queue');
-const watched = new LocalStorageEntry('Watched');
+
 const currentPage = new LocalStorageEntry('Current page');
-export { queue, watched };
+
 
 const input = document.querySelector('.js-movie-search');
 const searchBtn = document.querySelector('.js-search-btn');
 const galleryList = document.querySelector('ul.gallery');
-const infoText = document.querySelector('.info__text')
+const infoText = document.querySelector('.info__text');
 
 searchBtn.addEventListener('click', onSearchBtnClick);
 
-createDataResults();
 addTrendingCards();
 
 async function addTrendingCards() {
@@ -25,9 +26,8 @@ async function addTrendingCards() {
     currentPage.addMovieToLocalStorage(trendingMovies);
     const markup = createGalleryCardsMarkup(trendingMovies);
     galleryList.innerHTML = markup;
-    modalUtils.addGalleryCardsEventListeners(currentPage);
+    modalUtils.handleGalleryCards(currentPage);
 }
-
 
 async function onSearchBtnClick(e) {
     e.preventDefault();
@@ -50,15 +50,10 @@ async function onSearchBtnClick(e) {
     const markup = createGalleryCardsMarkup(moviesByTitle);
     galleryList.innerHTML = markup;
     currentPage.addMovieToLocalStorage(moviesByTitle);
-    modalUtils.addGalleryCardsEventListeners(currentPage);
+    modalUtils.handleGalleryCards(currentPage);
 
 }
 
-async function createDataResults() {
-    queue.updateLocalStorageEntry();
-    watched.updateLocalStorageEntry();
-    currentPage.updateLocalStorageEntry();
-}
 
 function createGalleryCardsMarkup(movies) {
     
@@ -83,6 +78,5 @@ function createGalleryCardsMarkup(movies) {
 function clearGalleryList() {
     galleryList.innerHTML = '';
 }
-
 
 
