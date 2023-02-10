@@ -1,14 +1,9 @@
-// import {watched, queue} from './js/modal-window';
-
-
 import { fetchMovies } from "./js/fetch-movies";
 import { LocalStorageEntry } from "./js/local-storage-entry";
 import * as modalUtils from "./js/modal-window";
 
 const fetchMoviesApi = new fetchMovies();
-
 const currentPage = new LocalStorageEntry('Current page');
-
 
 const input = document.querySelector('.js-movie-search');
 const searchBtn = document.querySelector('.js-search-btn');
@@ -16,26 +11,32 @@ const galleryList = document.querySelector('ul.gallery');
 const infoText = document.querySelector('.info__text');
 
 searchBtn.addEventListener('click', onSearchBtnClick);
+input.addEventListener('keydown', onKeydownInput);
 
-addTrendingCards();
+addTrendingMovies();
 
-async function addTrendingCards() {
+// add trendeng movies to gallery
+async function addTrendingMovies() {
     clearGalleryList();
 
     const trendingMovies = await fetchMoviesApi.getTrendingMovies();
     currentPage.addMovieToLocalStorage(trendingMovies);
-    const markup = createGalleryCardsMarkup(trendingMovies);
+    const markup = createGalleryMoviesMarkup(trendingMovies);
     galleryList.innerHTML = markup;
-    modalUtils.handleGalleryCards(currentPage);
+    modalUtils.handleGalleryCards(currentPage, 'main');
 }
 
-async function onSearchBtnClick(e) {
-    e.preventDefault();
+function onKeydownInput(e) {
+    if (e.keyCode === 13) onSearchBtnClick();
+}
+
+// add movies by title to gallery
+async function onSearchBtnClick() {
     currentPage.clearList();
 
     clearGalleryList();
     if (input.value === '') {
-        addTrendingCards();
+        addTrendingMovies();
         return;
     }
     fetchMoviesApi.searchQuery = input.value;
@@ -47,19 +48,20 @@ async function onSearchBtnClick(e) {
             infoText.classList.add('is-hidden');
         }, 2000);
     }
-    const markup = createGalleryCardsMarkup(moviesByTitle);
+    const markup = createGalleryMoviesMarkup(moviesByTitle);
     galleryList.innerHTML = markup;
     currentPage.addMovieToLocalStorage(moviesByTitle);
-    modalUtils.handleGalleryCards(currentPage);
+    modalUtils.handleGalleryCards(currentPage, 'main');
 
 }
 
-
-function createGalleryCardsMarkup(movies) {
-    
+// create gallery movies markup
+function createGalleryMoviesMarkup(movies) {
     return movies.map((movie) => {
+        let genres = movie.genres.join(', ');
         if (movie.genres.length > 2) {
-            movie.genres = `${movie.genres[0]}, ${movie.genres[1]}, Other`;
+            genres = `${movie.genres[0]}, ${movie.genres[1]}, Other`
+            // movie.genres = `${movie.genres[0]}, ${movie.genres[1]}, Other`;
         };
         const release_date = new Date(movie.release_date)
         return `
@@ -67,7 +69,7 @@ function createGalleryCardsMarkup(movies) {
                 <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="Poster \'${movie.title}\'" class="card__movie-img" width="200" height="300">
                 <div class="card__info">
                     <p class="card__movie-title">${movie.title}</p>
-                    <p class="card__add-info">${movie.genres}
+                    <p class="card__add-info">${genres}
                     <span class="card__span"> | </span> ${release_date.getFullYear()} <span class="value__vote">${movie.vote_average.toFixed(1)}</span></p>
                 </div>
             </li>
@@ -75,6 +77,7 @@ function createGalleryCardsMarkup(movies) {
     }).join('');
 }
 
+// clear gallery
 function clearGalleryList() {
     galleryList.innerHTML = '';
 }

@@ -24,7 +24,7 @@ export class LocalStorageEntry {
         
     }
 
-    
+    // return true if the movie is found
     findMovie(movie) {
         if (this.list.length > 0) {
             if (this.list.map(movie => movie.id).includes(movie.id)) return true;
@@ -37,9 +37,7 @@ export class LocalStorageEntry {
         if(this.list.map(movie => movie.id).includes(movie.id)) {
             this.list.splice(this.list.indexOf(movie), 1);
             this.updateLocalStorageEntry();
-            // this.length = this.list.length;
-        } else
-        Notiflix.Notify.failure('can\'t find the movie to delete');
+        } 
     }
 
 
@@ -62,6 +60,7 @@ export class LocalStorageEntry {
         return this.length;
     }
 
+    // clear list
     clearList() {
         this.list = [];
     }

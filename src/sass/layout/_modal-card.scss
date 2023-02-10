@@ -12,27 +12,22 @@
     text-transform: uppercase;
 }
 
-.description-fields {
-    display: flex;
+.description-table {
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .parameter__item {
-    margin-right: 83px;
     color: var(--gray-modal-text-color);
+}
 
-    &:not(:last-child) {
-        margin-bottom: 8px;
-    }
+tr {
+    margin-bottom: 8px;
 }
 
 .value__item {
     line-height: 14px;
-
-    &:not(:last-child) {
-        margin-bottom: 8px;
-    }
 }
 
 .value__vote {
@@ -108,10 +103,6 @@
         line-height: 23px;
     }
 
-    .parameter__item {
-        margin-right: 40px;
-    }
-
     .modal-card__buttons button {
         width: 110px;
         height: 44px;
@@ -169,10 +160,6 @@
     .modal-card__title {
         font-size: 30px;
         line-height: 35px;
-    }
-
-    .parameter__item {
-        margin-right: 85px;
     }
 
     .modal-card__buttons {
