@@ -172,6 +172,7 @@ function handleLocalStorageButtons(movie) {
 
 // update library gallery
 function updateLibraryCards(movies) {
+    if (mode === 'main') return;
     const markup = updateLibraryMarkup(movies);
     galleryList.innerHTML = markup;
 }
