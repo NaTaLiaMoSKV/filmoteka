@@ -16,7 +16,7 @@ function handleGalleryCards(page, m) {
     const modalOpenList = document.querySelectorAll('[data-modal-open]');
     const modalClose = document.querySelector('[data-modal-close]');
     currentPage = page;
-    mpde = m;
+    mode = m;
 
     modalOpenList.forEach(item => {
         item.addEventListener('click', (e) => {
