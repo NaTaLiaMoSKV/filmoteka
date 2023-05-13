@@ -136,13 +136,11 @@ function handleLocalStorageButtons(movie) {
             watched.clearList();
             watched.updateLocalStorageEntry();
             watched.addMovieToLocalStorage(watchedMovies);
-            console.log(watchedMovies);
             updateLibraryCards(watchedMovies);
         } else { // add movie to LocalStorage 
             watched.addMovieToLocalStorage(movie);
             watchedBtn.textContent = 'Remove from watched';
             watchedMovies.unshift(movie);
-            console.log(watchedMovies);
             updateLibraryCards(watchedMovies);
         }
         
@@ -156,14 +154,12 @@ function handleLocalStorageButtons(movie) {
             queue.clearList();
             queue.updateLocalStorageEntry();
             queue.addMovieToLocalStorage(queueMovies);
-            console.log(queueMovies);
             updateLibraryCards(queueMovies);
             
         } else { // add movie to LocalStorage 
             queue.addMovieToLocalStorage(movie);
             queueBtn.textContent = 'Remove from queue';
             queueMovies.unshift(movie);
-            console.log(queueMovies);
             updateLibraryCards(queueMovies);
         }
     });

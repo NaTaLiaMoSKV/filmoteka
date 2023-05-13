@@ -61,7 +61,6 @@ function createGalleryMoviesMarkup(movies) {
         let genres = movie.genres.join(', ');
         if (movie.genres.length > 2) {
             genres = `${movie.genres[0]}, ${movie.genres[1]}, Other`
-            // movie.genres = `${movie.genres[0]}, ${movie.genres[1]}, Other`;
         };
         const release_date = new Date(movie.release_date)
         return `

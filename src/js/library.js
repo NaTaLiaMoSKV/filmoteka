@@ -2,9 +2,6 @@ import { LocalStorageEntry } from "./local-storage-entry";
 import { watchedMovies, queueMovies } from "./modal-window";
 import * as modalUtils from "./modal-window";
 
-// console.log(watchedMovies);
-// console.log(queueMovies);
-
 const currentLibraryPage = new LocalStorageEntry('Current library page');
 
 
@@ -22,7 +19,6 @@ function onLibraryLoad() {
 }
 
 function onWatchedBtnClick(e) {
-    // console.log(watchedMovies);
     queueBtn.classList.remove('on-focus');
     watchedBtn.classList.add('on-focus');
     addMovies(watchedMovies, 'watched');
@@ -36,8 +32,6 @@ function onQueueBtnClick(e) {
 
 function addMovies(moviesList, modeStr) {
     clearGalleryList();
-    
-
     currentLibraryPage.clearList();
     currentLibraryPage.addMovieToLocalStorage(moviesList);
     const markup = createGalleryMoviesMarkup(moviesList);
