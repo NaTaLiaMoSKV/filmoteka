@@ -32,8 +32,12 @@ header {
 
 .site-pages__item {
   font-size: 12px;
-  line-height: 14px;
+  line-height: 1.1;
   text-transform: uppercase;
+  transition: all 250ms var(--timing-function);
+}
+.site-pages__item:hover, .site-pages__item:focus {
+  border-bottom: 1px solid var(--red-content-color);
 }
 
 .site-pages__home-link {
@@ -55,20 +59,12 @@ header {
 }
 
 input.js-movie-search {
+  outline: none;
   border: none;
   background-color: transparent;
   color: var(--white-color);
   border-bottom: 1px solid var(--white-color);
-}
-input.js-movie-search::-moz-placeholder {
-  color: var(--white-color);
-  font-size: 14px;
-  line-height: 16px;
-}
-input.js-movie-search:-ms-input-placeholder {
-  color: var(--white-color);
-  font-size: 14px;
-  line-height: 16px;
+  padding-bottom: 3px;
 }
 input.js-movie-search::placeholder {
   color: var(--white-color);
@@ -119,12 +115,16 @@ p.info__text.is-hidden {
   color: var(--white-color);
   transition: border 250ms var(--timing-function), background-color 250ms var(--timing-function);
 }
-.library-buttons button:hover, .library-buttons button:focus {
+.library-buttons button:hover, .library-buttons button:focus, .library-buttons button.on-focus {
   border: 1px solid var(--orange-content-color);
   background-color: var(--orange-content-color);
 }
 .library-buttons button:last-child {
   margin-left: 32px;
+}
+.library-buttons button.on-focus {
+  border: 1px solid var(--orange-content-color);
+  background-color: var(--orange-content-color);
 }
 
 @media screen and (min-width: 320px) {
@@ -152,9 +152,6 @@ p.info__text.is-hidden {
   .js-movie-search {
     width: 336px;
   }
-  p.info__text {
-    margin-top: 15px;
-  }
   .library-buttons {
     margin-top: 40px;
   }
@@ -166,6 +163,46 @@ p.info__text.is-hidden {
   .js-movie-search {
     width: 394px;
   }
+  .logo__img {
+    width: 30px;
+    height: 30px;
+  }
+  .site-pages__item {
+    font-size: 18px;
+  }
+  .current-page {
+    border-bottom: 2px solid var(--red-content-color);
+  }
+}
+@media screen and (min-width: 1920px) {
+  .logo__site-title {
+    font-size: 45px;
+    letter-spacing: 0.03em;
+  }
+  p.info__text {
+    font-size: 18px;
+  }
+  input.js-movie-search {
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  input.js-movie-search::placeholder {
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  .js-search-btn {
+    width: 30px;
+    height: 30px;
+  }
+  .js-search-btn img {
+    width: 25px;
+    height: 25px;
+  }
+  .library-buttons button {
+    width: 170px;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+  }
 }
 .modal-window {
   position: absolute;
@@ -175,6 +212,22 @@ p.info__text.is-hidden {
   transform: translate(-50%, -50%);
   border: 1px solid var(--black-color);
   background-color: var(--white-color);
+  overflow-y: auto;
+  scrollbar-color: var(--orange-content-color);
+}
+.modal-window::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: var(--white-color);
+}
+.modal-window::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--white-color);
+}
+.modal-window::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #c1c3c7;
 }
 
 .modal-window__button {
@@ -196,70 +249,75 @@ p.info__text.is-hidden {
 }
 
 .modal-window__icon {
-  height: 100%;
-  transition: fill 250ms var(--timing-function);
+  width: 22px;
+  height: 22px;
+  transition: transform 250ms var(--timing-function);
 }
 .modal-window__icon:hover, .modal-window__icon:focus {
-  fill: var(--orange-content-color);
+  transform: scale(1.02);
 }
 
 @media screen and (min-width: 320px) {
   .modal-window {
     width: calc(100% - 80px);
     padding: 48px 20px 40px;
+    height: 70vh;
   }
 }
 @media screen and (min-width: 480px) {
   .modal-window {
     width: 380px;
     padding: 48px 30px 40px;
+    height: 60vh;
   }
 }
 @media screen and (min-width: 768px) {
   .modal-window {
     width: 596px;
     padding: 40px 72px 40px 36px;
+    height: auto;
+    max-height: 80vh;
   }
 }
 @media screen and (min-width: 1200px) {
   .modal-window {
-    width: 782px;
-    padding: 40px 12px;
+    width: 797px;
+    padding: 45px 17px;
   }
 }
 .modal-card {
   font-size: 12px;
   line-height: 16px;
+  letter-spacing: 0.03em;
   color: var(--black-color);
 }
 
 .modal-card__img {
   border-radius: 5px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .modal-card__title {
   text-transform: uppercase;
 }
 
-.description-fields {
-  display: flex;
+.description-table {
+  width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .parameter__item {
-  margin-right: 83px;
   color: var(--gray-modal-text-color);
 }
-.parameter__item:not(:last-child) {
+
+tr {
   margin-bottom: 8px;
 }
 
 .value__item {
   line-height: 14px;
-}
-.value__item:not(:last-child) {
-  margin-bottom: 8px;
 }
 
 .value__vote {
@@ -326,9 +384,6 @@ p.info__text.is-hidden {
     font-size: 20px;
     line-height: 23px;
   }
-  .parameter__item {
-    margin-right: 40px;
-  }
   .modal-card__buttons button {
     width: 110px;
     height: 44px;
@@ -339,7 +394,7 @@ p.info__text.is-hidden {
 }
 @media screen and (min-width: 480px) {
   .modal-card__img,
-.modal-card__description {
+  .modal-card__description {
     width: 380px;
   }
 }
@@ -350,7 +405,7 @@ p.info__text.is-hidden {
     margin-bottom: 0;
   }
   .modal-card__img {
-    width: 264px;
+    width: 294px;
     margin-bottom: 0px;
   }
   .modal-card__description {
@@ -366,6 +421,7 @@ p.info__text.is-hidden {
 @media screen and (min-width: 1200px) {
   .modal-card__img {
     width: 375px;
+    height: 450px;
   }
   .modal-card__description {
     width: 390px;
@@ -373,9 +429,6 @@ p.info__text.is-hidden {
   .modal-card__title {
     font-size: 30px;
     line-height: 35px;
-  }
-  .parameter__item {
-    margin-right: 85px;
   }
   .modal-card__buttons {
     margin-left: 8px;
@@ -389,6 +442,13 @@ body {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
+  background-color: #f7f1f1;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+body.modal-open {
+  overflow: hidden;
 }
 
 img {
@@ -441,7 +501,8 @@ ul {
 }
 @media screen and (min-width: 1200px) {
   .container {
-    width: 1136px;
+    width: calc(100% - 64px);
+    max-width: 1650px;
   }
 }
 .backdrop {
@@ -450,6 +511,7 @@ ul {
   left: 0;
   height: 100%;
   width: 100%;
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.2);
   opacity: 1;
   transition: opacity 250ms var(--timing-function);
@@ -461,8 +523,15 @@ ul {
 }
 
 li.card {
-  margin-left: auto;
-  margin-right: auto;
+  position: relative;
+  margin: 0;
+  padding-bottom: 20px;
+  transition: transform 250ms var(--timing-function);
+  letter-spacing: 0.03em;
+}
+li.card:hover, li.card:focus {
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
 .card__movie-img {
@@ -474,6 +543,8 @@ li.card {
 }
 
 .card__add-info {
+  position: absolute;
+  bottom: 0;
   color: var(--orange-content-color);
 }
 
@@ -483,21 +554,22 @@ span.value__vote {
 
 @media screen and (min-width: 320px) {
   .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
     margin-top: 20px;
     margin-bottom: 40px;
   }
   li.card {
     width: 280px;
   }
-  li.card:not(:last-child) {
-    margin-bottom: 32px;
-  }
   .card__movie-img {
     width: 280px;
     height: 398px;
   }
   .card__movie-title,
-.card__add-info {
+  .card__add-info {
     font-size: 12px;
     line-height: 16px;
   }
@@ -506,15 +578,14 @@ span.value__vote {
   .gallery {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 32px;
   }
   li.card {
     width: 336px;
-    margin-bottom: 32px;
-  }
-  li.card:nth-last-child(1), li.card:nth-last-child(2) {
-    margin-bottom: 0;
   }
   .card__movie-img {
     width: 336px;
@@ -523,6 +594,17 @@ span.value__vote {
   }
 }
 @media screen and (min-width: 1200px) {
+  .gallery {
+    column-gap: 16px;
+    row-gap: 32px;
+    max-width: 1600px;
+  }
+  .card__movie-title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+@media screen and (min-width: 1920px) {
   .card__movie-title {
     font-size: 20px;
     line-height: 24px;

@@ -1,6 +1,7 @@
 import { fetchMovies } from "./js/fetch-movies";
 import { LocalStorageEntry } from "./js/local-storage-entry";
 import * as modalUtils from "./js/modal-window";
+import imageNotFound from './images/not-found.jpg'
 
 const fetchMoviesApi = new fetchMovies();
 const currentPage = new LocalStorageEntry('Current page');
@@ -20,7 +21,10 @@ async function addTrendingMovies() {
     clearGalleryList();
 
     const trendingMovies = await fetchMoviesApi.getTrendingMovies();
-    currentPage.addMovieToLocalStorage(trendingMovies);
+    trendingMovies.forEach(movie => {
+        currentPage.addMovieToLocalStorage(movie);
+    });
+    
     const markup = createGalleryMoviesMarkup(trendingMovies);
     galleryList.innerHTML = markup;
     modalUtils.handleGalleryCards(currentPage, 'main');
@@ -50,9 +54,10 @@ async function onSearchBtnClick() {
     }
     const markup = createGalleryMoviesMarkup(moviesByTitle);
     galleryList.innerHTML = markup;
-    currentPage.addMovieToLocalStorage(moviesByTitle);
+    moviesByTitle.forEach(movie => {
+        currentPage.addMovieToLocalStorage(movie);
+    });
     modalUtils.handleGalleryCards(currentPage, 'main');
-
 }
 
 // create gallery movies markup
@@ -62,10 +67,12 @@ function createGalleryMoviesMarkup(movies) {
         if (movie.genres.length > 2) {
             genres = `${movie.genres[0]}, ${movie.genres[1]}, Other`
         };
-        const release_date = new Date(movie.release_date)
+        const release_date = new Date(movie.release_date);
+        const poster = movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : imageNotFound;
+
         return `
-            <li class="card" data-id="${movie.id}" data-modal-open>
-                <img src="https://image.tmdb.org/t/p/original${movie.poster_path}" alt="Poster \'${movie.title}\'" class="card__movie-img" width="200" height="300">
+            <li class="card" data-id=${movie.id} data-modal-open>
+                <img src=${poster} alt="Poster \'${movie.title}\'" class="card__movie-img" width="200" height="300">
                 <div class="card__info">
                     <p class="card__movie-title">${movie.title}</p>
                     <p class="card__add-info">${genres}
@@ -80,5 +87,6 @@ function createGalleryMoviesMarkup(movies) {
 function clearGalleryList() {
     galleryList.innerHTML = '';
 }
+
 
 

@@ -1,67 +1,67 @@
-import Notiflix, { Notify } from "notiflix";
+import Notiflix from "notiflix";
 
 export class LocalStorageEntry {
     list = [];
+    key = "";
     length = 0;
 
     constructor(key) {
         this.key = key;
-    }
-
-    // return movie from localStorage by id
-    getMovieById(movieId) {
-        for (let i = 0; i < this.list[0].length; i++) {
-            if (this.list[0][i].id == movieId) return this.list[0][i];
+        const storedData = this.getLocalStorageEntry();
+        if (storedData && Array.isArray(storedData)) {
+            this.list = storedData;
+            this.length = this.list.length;
         }
     }
 
-    // add new Movie to localStorage
+    // get movie from localStorage by id
+    getMovieById(movieId) {
+        return this.list.find(movie => movie.id.toString() === movieId);
+    }
+
+    // add new movie to localStorage
     addMovieToLocalStorage(movie) {
-        if (!this.list.includes(movie)) {
-            this.list.unshift(movie);
+        if (!this.findMovie(movie)) {
+            if (this.key === 'Current page') this.list.push(movie);
+            else this.list.unshift(movie)
             this.updateLocalStorageEntry();
-        } else Notiflix.Notify.info('already in storage');
-        
+        }
     }
 
-    // return true if the movie is found
+    // return true if movie is found
     findMovie(movie) {
-        if (this.list.length > 0) {
-            if (this.list.map(movie => movie.id).includes(movie.id)) return true;
-            else return false;
-        } return false;
+        return this.list.some(item => item.id === movie.id);
     }
 
-    // delete the movie from localStorage
+    // delete movie from localStorage
     deleteMovieFromLocalStorage(movie) {
-        if(this.list.map(movie => movie.id).includes(movie.id)) {
-            this.list.splice(this.list.indexOf(movie), 1);
+        const index = this.list.findIndex(item => item.id === movie.id);
+        if (index !== -1) {
+            this.list.splice(index, 1);
             this.updateLocalStorageEntry();
-        } 
+        }
     }
 
-
-    // update entry in localStorage 
+    // update localStorage entry
     updateLocalStorageEntry() {
         localStorage.setItem(this.key, JSON.stringify(this.list));
         this.length = this.list.length;
     }
 
-    
-    // get entries from localStorage
-    getLocalStorageEntry(){
-        if(localStorage.getItem(this.key)) {
-            return JSON.parse(localStorage.getItem(this.key));
-        }
+    // get localStorage entry
+    getLocalStorageEntry() {
+        const storedData = localStorage.getItem(this.key);
+        return storedData ? JSON.parse(storedData) : [];
     }
 
-    // get number of movies
-    get length() {
+    // get length
+    getLength() {
         return this.length;
     }
 
     // clear list
     clearList() {
         this.list = [];
+        this.updateLocalStorageEntry();
     }
 }

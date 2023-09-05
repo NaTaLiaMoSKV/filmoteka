@@ -1,11 +1,14 @@
 .modal-card {
     font-size: 12px;
     line-height: 16px;
+    letter-spacing: 0.03em;
     color: var(--black-color);
 }
 
 .modal-card__img {
     border-radius: 5px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .modal-card__title {
@@ -130,7 +133,7 @@ tr {
     }
 
     .modal-card__img {
-        width: 264px;
+        width: 294px;
         margin-bottom: 0px;
     }
 
@@ -151,6 +154,7 @@ tr {
 
     .modal-card__img {
         width: 375px;
+        height: 450px;
     }
 
     .modal-card__description {
