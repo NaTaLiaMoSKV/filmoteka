@@ -1,8 +1,6 @@
 
 li.card {
-    position: relative;
     margin: 0;
-    padding-bottom: 20px;
     transition: transform 250ms var(--timing-function);
     letter-spacing: 0.03em;
 
@@ -22,8 +20,6 @@ li.card {
 }
 
 .card__add-info {
-    position: absolute;
-    bottom: 0;
     color: var(--orange-content-color);
 }
 
@@ -54,7 +50,7 @@ span.value__vote {
     .card__movie-title,
     .card__add-info {
         font-size: 12px;
-        line-height: 16px;
+        line-height: 1.1;
     }
 }
 
@@ -93,6 +89,11 @@ span.value__vote {
     .card__movie-title {
         font-size: 20px;
         line-height: 24px;
+    }
+
+    .card__movie-title,
+    .card__add-info {
+        font-size: 16px;
     }
 }
 

@@ -6,25 +6,53 @@ import imageNotFound from '../images/not-found.jpg'
 const currentLibraryPage = new LocalStorageEntry('Current library page');
 
 const galleryList = document.querySelector('ul.gallery');
-
 const watchedBtn = document.querySelector('.js-watched-btn');
 const queueBtn = document.querySelector('.js-queue-btn');
 
-onWatchedBtnClick();
+function setCurrentModeToLocalStorage(mode) {
+  localStorage.setItem('currentMode', mode);
+}
 
-watchedBtn.addEventListener('click', onWatchedBtnClick);
-queueBtn.addEventListener('click', onQueueBtnClick);
+function getCurrentModeFromLocalStorage() {
+  return localStorage.getItem('currentMode');
+}
+
+const savedMode = getCurrentModeFromLocalStorage();
+
+if (savedMode === 'queue') {
+    onQueueBtnClick();
+} else {
+    onWatchedBtnClick();
+}
+
+watchedBtn.addEventListener('click', () => {
+    onWatchedBtnClick();
+    setCurrentModeToLocalStorage('watched'); 
+});
+
+queueBtn.addEventListener('click', () => {
+    onQueueBtnClick();
+    setCurrentModeToLocalStorage('queue');
+});
 
 function onWatchedBtnClick(e) {
     queueBtn.classList.remove('on-focus');
     watchedBtn.classList.add('on-focus');
-    addMovies(watchedMovies, 'watched');
+    
+    if (watchedMovies.length === 0) {
+        const placeholderMarkup = modalUtils.createLibraryPlaceholderMarkup('watched');
+        galleryList.innerHTML = placeholderMarkup;
+    } else addMovies(watchedMovies, 'watched');
 }
 
 function onQueueBtnClick(e) {
     watchedBtn.classList.remove('on-focus');
     queueBtn.classList.add('on-focus');
-    addMovies(queueMovies, 'queue');
+
+    if (queueMovies.length === 0) {
+        const placeholderMarkup = modalUtils.createLibraryPlaceholderMarkup('queue');
+        galleryList.innerHTML = placeholderMarkup;
+    } else addMovies(queueMovies, 'queue');
 }
 
 function addMovies(list, mode) {

@@ -29,6 +29,7 @@ header {
 .site-pages {
     display: flex;
     align-items: center;
+    gap: 40px;
 }
 
 .site-pages__item {
@@ -41,10 +42,6 @@ header {
     &:focus {
         border-bottom: 1px solid var(--red-content-color);
     }
-}
-
-.site-pages__home-link {
-    margin-right: 40px;
 }
 
 .current-page {
@@ -108,6 +105,7 @@ p.info__text {
 .library-buttons {
     display: flex;
     justify-content: center;
+    gap: 32px;
     padding-bottom: 60px;
 }
 
@@ -128,10 +126,6 @@ p.info__text {
     &.on-focus {
         border: 1px solid var(--orange-content-color);
         background-color: var(--orange-content-color);
-    }
-
-    &:last-child {
-        margin-left: 32px;
     }
 
     &.on-focus {
@@ -200,8 +194,16 @@ p.info__text {
         font-size: 18px;
     }
 
-    .current-page {
+    .current-page,
+    .site-pages__item:hover,
+    .site-pages__item:focus {
         border-bottom: 2px solid var(--red-content-color);
+    }
+
+    .library-buttons button {
+        width: 170px;
+        font-size: 14px;
+        letter-spacing: 0.02em;
     }
 }
 
@@ -235,12 +237,6 @@ p.info__text {
     .js-search-btn img {
         width: 25px;
         height: 25px;
-    }
-
-    .library-buttons button {
-        width: 170px;
-        font-size: 16px;
-        letter-spacing: 0.02em;
     }
 
 }

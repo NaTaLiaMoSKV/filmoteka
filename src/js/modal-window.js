@@ -23,7 +23,6 @@ function handleGalleryCards(page, m) {
 
     modalOpenList.forEach(item => {
         item.addEventListener('click', (e) => {
-            console.log(e)
             modal.classList.remove('is-hidden');
             body.classList.add('modal-open');
 
@@ -101,8 +100,8 @@ function createModalCardMarkup(movie) {
             <h3 class="modal-card__about">ABOUT</h3>
             <p class="modal-card__about-overview">${movie.overview}</p>
             <div class="modal-card__buttons">
-            ${mode !== 'queue' ? `<button type="submit" class="add-to-watched-btn">${watchedBtnText}</button>`: `<button type="submit" style="display: none" class="add-to-watched-btn">${watchedBtnText}</button>`}
-            ${mode !== 'watched' ? `<button type="submit" class="add-to-queue-btn">${queueBtnText}</button>` : `<button type="submit" style="display: none" class="add-to-queue-btn">${queueBtnText}</button>`}           
+                <button type="submit" class="add-to-watched-btn">${watchedBtnText}</button>
+                <button type="submit" class="add-to-queue-btn">${queueBtnText}</button>           
             </div>
         </div>
     `;
@@ -161,6 +160,12 @@ function handleLocalStorageButtons(movie) {
 // update library gallery
 function updateLibraryCards(movies) {
     if (mode === 'main') return;
+    if (movies.length === 0) {
+        const placeholderMarkup = createLibraryPlaceholderMarkup(mode);
+        galleryList.innerHTML = placeholderMarkup;
+        handleGalleryCards(currentPage, mode);
+        return;
+    }
 
     const markup = updateLibraryMarkup(movies);
     galleryList.innerHTML = markup;
@@ -189,5 +194,16 @@ function updateLibraryMarkup(movies) {
     }).join('');
 }
 
+const createLibraryPlaceholderMarkup = (listName) => {
+    return `
+    <div class="placeholder">
+        <p class="placeholder__text">Your ${listName} list is empty. Go to the 
+            <a class="placeholder__link" href="../index.html">home</a>
+            page and add interesting movies to you!
+        </p>
+    </div>`;
+}
+
+
 export { watchedMovies, queueMovies };
-export { handleGalleryCards, createModalCardMarkup };
+export { handleGalleryCards, createModalCardMarkup, createLibraryPlaceholderMarkup };

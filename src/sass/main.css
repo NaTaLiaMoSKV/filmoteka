@@ -28,6 +28,7 @@ header {
 .site-pages {
   display: flex;
   align-items: center;
+  gap: 40px;
 }
 
 .site-pages__item {
@@ -38,10 +39,6 @@ header {
 }
 .site-pages__item:hover, .site-pages__item:focus {
   border-bottom: 1px solid var(--red-content-color);
-}
-
-.site-pages__home-link {
-  margin-right: 40px;
 }
 
 .current-page {
@@ -101,6 +98,7 @@ p.info__text.is-hidden {
 .library-buttons {
   display: flex;
   justify-content: center;
+  gap: 32px;
   padding-bottom: 60px;
 }
 
@@ -118,9 +116,6 @@ p.info__text.is-hidden {
 .library-buttons button:hover, .library-buttons button:focus, .library-buttons button.on-focus {
   border: 1px solid var(--orange-content-color);
   background-color: var(--orange-content-color);
-}
-.library-buttons button:last-child {
-  margin-left: 32px;
 }
 .library-buttons button.on-focus {
   border: 1px solid var(--orange-content-color);
@@ -170,8 +165,15 @@ p.info__text.is-hidden {
   .site-pages__item {
     font-size: 18px;
   }
-  .current-page {
+  .current-page,
+  .site-pages__item:hover,
+  .site-pages__item:focus {
     border-bottom: 2px solid var(--red-content-color);
+  }
+  .library-buttons button {
+    width: 170px;
+    font-size: 14px;
+    letter-spacing: 0.02em;
   }
 }
 @media screen and (min-width: 1920px) {
@@ -197,11 +199,6 @@ p.info__text.is-hidden {
   .js-search-btn img {
     width: 25px;
     height: 25px;
-  }
-  .library-buttons button {
-    width: 170px;
-    font-size: 16px;
-    letter-spacing: 0.02em;
   }
 }
 .modal-window {
@@ -274,15 +271,22 @@ p.info__text.is-hidden {
 @media screen and (min-width: 768px) {
   .modal-window {
     width: 596px;
-    padding: 40px 72px 40px 36px;
+    padding: 50px 35px 35px;
     height: auto;
     max-height: 80vh;
+  }
+  .modal-window__button {
+    right: 12px;
+    top: 12px;
   }
 }
 @media screen and (min-width: 1200px) {
   .modal-window {
     width: 797px;
-    padding: 45px 17px;
+    padding-top: 55px;
+  }
+  h3.modal-card__about {
+    font-size: 16px;
   }
 }
 .modal-card {
@@ -317,7 +321,7 @@ tr {
 }
 
 .value__item {
-  line-height: 14px;
+  line-height: 1.4;
 }
 
 .value__vote {
@@ -346,7 +350,7 @@ tr {
 
 .modal-card__about-overview {
   font-size: 12px;
-  line-height: 20px;
+  line-height: 1.5;
 }
 
 .modal-card__buttons {
@@ -416,6 +420,15 @@ tr {
   }
   .add-to-watched-btn {
     margin-right: 15px;
+  }
+  .description-table {
+    font-size: 14px;
+  }
+  tr > td {
+    padding-bottom: 5px;
+  }
+  .modal-card__about-overview {
+    font-size: 14px;
   }
 }
 @media screen and (min-width: 1200px) {
@@ -523,9 +536,7 @@ ul {
 }
 
 li.card {
-  position: relative;
   margin: 0;
-  padding-bottom: 20px;
   transition: transform 250ms var(--timing-function);
   letter-spacing: 0.03em;
 }
@@ -543,8 +554,6 @@ li.card:hover, li.card:focus {
 }
 
 .card__add-info {
-  position: absolute;
-  bottom: 0;
   color: var(--orange-content-color);
 }
 
@@ -571,7 +580,7 @@ span.value__vote {
   .card__movie-title,
   .card__add-info {
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1.1;
   }
 }
 @media screen and (min-width: 768px) {
@@ -603,11 +612,58 @@ span.value__vote {
     font-size: 20px;
     line-height: 24px;
   }
+  .card__movie-title,
+  .card__add-info {
+    font-size: 16px;
+  }
 }
 @media screen and (min-width: 1920px) {
   .card__movie-title {
     font-size: 20px;
     line-height: 24px;
+  }
+}
+.placeholder {
+  margin-top: 20px;
+  width: calc(100% - 100px);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.placeholder__text {
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.placeholder__link {
+  display: inline-block;
+  font-size: 20px;
+  color: black;
+  border-bottom: 1px solid black;
+  transition: all 250ms var(--timing-function);
+}
+.placeholder__link:hover, .placeholder__link:focus {
+  color: var(--red-content-color);
+  border-bottom: 1px solid var(--red-content-color);
+}
+
+@media screen and (min-width: 480px) {
+  .placeholder {
+    width: 440px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .placeholder {
+    padding: 30px 40px;
+    margin-top: 40px;
+    width: auto;
+  }
+  .placeholder__link,
+  .placeholder__text {
+    font-size: 25px;
   }
 }
 :root {

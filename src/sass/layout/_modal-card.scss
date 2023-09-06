@@ -30,7 +30,7 @@ tr {
 }
 
 .value__item {
-    line-height: 14px;
+    line-height: 1.4;
 }
 
 .value__vote {
@@ -59,7 +59,7 @@ tr {
 
 .modal-card__about-overview {
     font-size: 12px;
-    line-height: 20px;
+    line-height: 1.5;
 }
 
 .modal-card__buttons {
@@ -147,6 +147,18 @@ tr {
 
     .add-to-watched-btn {
         margin-right: 15px;
+    }
+
+    .description-table {
+        font-size: 14px;
+    }
+
+    tr>td {
+        padding-bottom: 5px;
+    }
+
+    .modal-card__about-overview {
+        font-size: 14px;
     }
 }
 
