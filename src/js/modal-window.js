@@ -100,8 +100,8 @@ function createModalCardMarkup(movie) {
             <h3 class="modal-card__about">ABOUT</h3>
             <p class="modal-card__about-overview">${movie.overview}</p>
             <div class="modal-card__buttons">
-                <button type="submit" class="add-to-watched-btn">${watchedBtnText}</button>
-                <button type="submit" class="add-to-queue-btn">${queueBtnText}</button>           
+                ${mode !== 'queue' ? `<button type="submit" class="add-to-watched-btn">${watchedBtnText}</button>`: `<button type="submit" style="display: none" class="add-to-watched-btn">${watchedBtnText}</button>`}
+                ${mode !== 'watched' ? `<button type="submit" class="add-to-queue-btn">${queueBtnText}</button>` : `<button type="submit" style="display: none" class="add-to-queue-btn">${queueBtnText}</button>`}  
             </div>
         </div>
     `;
